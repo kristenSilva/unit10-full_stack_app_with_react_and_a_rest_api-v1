@@ -21,7 +21,7 @@ export default class Courses extends Component {
         const { courses } = this.state;
         const courseList = courses.map(course =>
             <Link className="course--module course--link" to={`/courses/${course.id}`}>
-                <h2 className="course--label">{course.id}</h2>
+                <h2 className="course--label">Course</h2>
                 <h3 className="course--title" key={course.id}>{course.title}</h3>
             </Link>
         );

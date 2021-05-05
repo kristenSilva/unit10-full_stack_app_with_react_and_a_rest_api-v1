@@ -1,45 +1,24 @@
-import React, { Component } from 'react';
-// import {
-//   BrowserRouter as Router,
-//   Route,
-//   Switch
-// } from 'react-router-dom';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from 'react-router-dom';
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <div>Data should go here</div>
-//       </header>
-//     </div>
-//   );
-// }
+import withContext from './Context';
+import Courses from './components/Courses';
+import CourseDetail from './components/CourseDetail';
 
-class App extends Component {
+const CoursesWithContext = withContext(Courses);
+const CourseDetailWithContext = withContext(CourseDetail);
 
-  constructor() {
-    super();
-    this.state = {
-      data: {},
-    };
-  }
-
-  componentDidMount() {
-    fetch('http://localhost:5000/api/courses')
-    .then(res => res.json())
-    .then((data) => {
-      this.setState({
-        data: data
-      });
-      console.log('data from api:', data);
-    });
-  }
-
-  // render() {
-  //   return(
-  //     <div>{[this.state.data]}</div>
-  //   )
-  // }
-
-}
-export default App;
+export default () => (
+  <Router>
+    <div>
+      <Switch>
+        <Route exact path="/" component={CoursesWithContext} />
+        <Route path="/courses/:id" component={CourseDetailWithContext} />
+      </Switch>
+    </div>
+  </Router>
+);

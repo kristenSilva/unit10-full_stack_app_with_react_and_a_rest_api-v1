@@ -1,21 +1,30 @@
 import config from './config';
 
 export default class Data {
-	api(path, method = 'GET', body = null){
-			const url = config.apiBaseUrl + path;
+	api(path, method = 'GET', body = null, requiresAuth = false, credentials = null){
+    const url = config.apiBaseUrl + path;
 
-			const options = {
-					method,
-					headers: {
-							'Content-Type': 'application/json; charset=utf-8',
-					}
-			}
+    const options = {
+      method,
+      headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+      }
+    }
 
-			if(body !== null){
-					options.body = JSON.stringify(body);
-			}
+    if(body !== null){
+      options.body = JSON.stringify(body);
+    }
 
-			return fetch(url, options);
+    //check if endpoint(or route) requires user auth
+    if(requiresAuth){
+      //btoa creates base-64 encoded string from string of data
+      const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`);
+
+      //set authorization header on each request that requires it by adding Authorization poperty to the headers object
+      options.headers['Authorization'] = `Basic ${encodedCredentials}`;
+    }
+
+    return fetch(url, options);
 	}
 
   /**
@@ -23,8 +32,8 @@ export default class Data {
    */
 
   // GETS individual user
-  async getUser() {
-    const response = await this.api(`/users`, 'GET', null);
+  async getUser(emailAddress, password) {
+    const response = await this.api(`/users`, 'GET', null, true, { emailAddress, password });
     if (response.status === 200) {
       return response.json().then(data => data);
     }

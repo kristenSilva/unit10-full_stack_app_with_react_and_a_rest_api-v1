@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Form from './Form';
 
-export default class UserSignUp extends Component {
+export default class UserSignIn extends Component {
   state = {
-    firstName: '',
-    lastName: '',
     emailAddress: '',
     password: '',
     errors: [],
@@ -13,8 +11,6 @@ export default class UserSignUp extends Component {
 
   render() {
     const {
-      firstName,
-      lastName,
       emailAddress,
       password,
       errors,
@@ -22,31 +18,15 @@ export default class UserSignUp extends Component {
 
     return (
       <div className="form--centered">
-        <h2>Sign Up</h2>
+        <h2>Sign In</h2>
 
         <Form 
           cancel={this.cancel}
           errors={errors}
           submit={this.submit}
-          submitButtonText="Sign Up"
+          submitButtonText="Sign In"
           elements={() => (
             <React.Fragment>
-              <label>First Name
-                <input 
-                  id="firstName" 
-                  name="firstName" 
-                  type="text"
-                  value={firstName} 
-                  onChange={this.change} />
-              </label>
-              <label>Last Name
-                <input 
-                  id="lastName" 
-                  name="lastName" 
-                  type="text"
-                  value={lastName} 
-                  onChange={this.change} />
-              </label>
               <label>Email Address
                 <input 
                   id="emailAddress" 
@@ -62,11 +42,11 @@ export default class UserSignUp extends Component {
                   type="password"
                   value={password} 
                   onChange={this.change} />
-              </label>
+              </label>               
             </React.Fragment>
           )} />
         <p>
-          Already have a user account? Click here <Link to="/signin">to sign in</Link>!
+          Don't have a user account? <Link to="/signup">Click here</Link> to sign up!
         </p>
       </div>
     );
@@ -85,31 +65,26 @@ export default class UserSignUp extends Component {
 
   submit = () => {
     const { context } = this.props;
-    const { firstName, lastName, emailAddress, password } = this.state;
-
-    //new user info object using shorthand syntax
-    const user = {
-      firstName,
-      lastName,
-      emailAddress,
-      password
-    };
-
-    //create new user
-    context.data.createUser(user)
-    .then(errors => {
-      if(errors.length){
-        this.setState({ errors });
+    const { from } = this.props.location.state || { from: { pathname: '/authenticated' }};
+    const { emailAddress, password } = this.state;
+    //signIn returns a promise w/ resolved value holding an object with authentiated user's name/emailAddress oR null if response is a 401 Unauthorized status
+    context.actions.signIn(emailAddress, password)
+    .then(user => {
+      if(user === null){
+        this.setState(() => {
+          return { errors: ['Sign-in unsuccessful']};
+        });
       } else {
-        console.log('user created: ${emailAddress}');
+        //redirects to page they were trying to access
+        this.props.history.push(from);
+        console.log(`SUCCESS ${emailAddress} is now signed in`);
       }
     })
     .catch(err => {
-      //handle the rejected promise
       console.log(err);
-      //redirect to error page by pushing to history stack
       this.props.history.push('/error');
-    })
+    });
+
   }
 
   cancel = () => {

@@ -18,6 +18,11 @@ export default class Data {
 			return fetch(url, options);
 	}
 
+  /**
+   * USER ACTIONS
+   */
+
+  // GETS individual user
   async getUser() {
     const response = await this.api(`/users`, 'GET', null);
     if (response.status === 200) {
@@ -31,6 +36,7 @@ export default class Data {
     }
   }
   
+  // POST creates user
   async createUser(user) {
     const response = await this.api('/users', 'POST', user);
     if (response.status === 201) {
@@ -46,6 +52,11 @@ export default class Data {
     }
   }
 
+  /**
+   * COURSE ACTIONS
+   */
+
+  // GETS all courses
 	async getCourses() {
 		const response = await this.api('/courses', 'GET', null);
 		if (response.status === 200){
@@ -57,6 +68,7 @@ export default class Data {
 		}
 	}
 
+  // GETS individual course
 	async getCourse(id) {
     const response = await this.api(`/courses/${id}`, 'GET', null);
     if (response.status === 200) {
@@ -69,4 +81,20 @@ export default class Data {
       throw new Error();
     }
   }
+
+  // POST creates course
+  async createCourse(course) {
+    const response = await this.api('/courses', 'POST', course);
+    if (response.status === 201) {
+      return [];
+    }
+    else if (response.status === 400) {
+      return response.json().then(data => {
+        return data.errors;
+      });
+    }
+    else {
+      throw new Error();
+    }
+  }  
 }

@@ -56,7 +56,7 @@ router.post('/users', asyncHandler(async (req, res) => {
 // Route that returns a list of all courses including User that owns each course
 router.get('/courses', asyncHandler(async (req, res) => {
   const courses = await Course.findAll({
-    attributes: ['title', 'description', 'estimatedTime', 'materialsNeeded'],
+    attributes: ['id', 'title', 'description', 'estimatedTime', 'materialsNeeded'],
     include: [
       {
         model: User,
@@ -70,7 +70,7 @@ router.get('/courses', asyncHandler(async (req, res) => {
 // Route that returns corresponding course and User (owner)
 router.get('/courses/:id', asyncHandler(async (req, res) => {
   const course = await Course.findByPk(req.params.id, {
-    attributes: ['title', 'description', 'estimatedTime', 'materialsNeeded'],
+    attributes: ['id', 'title', 'description', 'estimatedTime', 'materialsNeeded'],
     include: [
       {
         model: User,

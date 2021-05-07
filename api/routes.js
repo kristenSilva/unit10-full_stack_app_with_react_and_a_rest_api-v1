@@ -28,6 +28,7 @@ function asyncHandler(cb) {
 router.get('/users', authenticateUser, asyncHandler(async (req, res) => {
     const user = req.currentUser;
     res.json({
+      id: user.id,
       firstName: user.firstName,
       lastName: user.lastName,
       emailAddress: user.emailAddress
@@ -71,7 +72,7 @@ router.get('/courses', asyncHandler(async (req, res) => {
 // Route that returns corresponding course and User (owner)
 router.get('/courses/:id', asyncHandler(async (req, res) => {
   const course = await Course.findByPk(req.params.id, {
-    attributes: ['id', 'title', 'description', 'estimatedTime', 'materialsNeeded'],
+    attributes: ['id', 'title', 'description', 'estimatedTime', 'materialsNeeded', 'userId'],
     include: [
       {
         model: User,

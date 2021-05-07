@@ -19,7 +19,6 @@ export default class UserSignIn extends Component {
     return (
       <div className="form--centered">
         <h2>Sign In</h2>
-
         <Form 
           cancel={this.cancel}
           errors={errors}
@@ -65,9 +64,10 @@ export default class UserSignIn extends Component {
 
   submit = () => {
     const { context } = this.props;
-    const { from } = this.props.location.state || { from: { pathname: '/authenticated' }};
+    const { from } = this.props.location.state || { from: { pathname: '/' }};
     const { emailAddress, password } = this.state;
-    //signIn returns a promise w/ resolved value holding an object with authentiated user's name/emailAddress oR null if response is a 401 Unauthorized status
+
+    //signIn returns a promise w/ resolved value holding an object with authenticated user's name/emailAddress oR null if response is a 401 Unauthorized status
     context.actions.signIn(emailAddress, password)
     .then(user => {
       if(user === null){
@@ -77,7 +77,7 @@ export default class UserSignIn extends Component {
       } else {
         //redirects to page they were trying to access
         this.props.history.push(from);
-        console.log(`SUCCESS ${emailAddress} is now signed in`);
+        console.log(`SUCCESS ${emailAddress} is now signed in: ${user}`);
       }
     })
     .catch(err => {

@@ -4,6 +4,9 @@ import Data from './Data';
 const Context = React.createContext(); 
 
 export class Provider extends Component {
+  state = {
+    authenticatedUser: null
+  };
 
   constructor() {
     super();
@@ -11,9 +14,16 @@ export class Provider extends Component {
   }
 
   render() {
+    const { authenticatedUser } = this.state;
+
     //value object to provide utility methods of Data class
     const value = {
-        data: this.data,
+      data: this.data,
+      actions: {
+        signIn: this.signIn,
+        signOut: this.signOut
+      },
+      authenticatedUser
     }
     return (
       <Context.Provider value={value}>
@@ -23,12 +33,21 @@ export class Provider extends Component {
   }
 
   
-  signIn = async () => {
-
+  signIn = async (emailAddress, password) => {
+    const user = await this.data.getUser(emailAddress, password);
+    user.password =  password;
+    if(user !== null){
+      this.setState(() => {
+        return {
+          authenticatedUser: user
+        };
+      });
+    }
+    return user;
   }
 
   signOut = () => {
-
+    this.setState({ authenticatedUser: null });
   }
 }
 

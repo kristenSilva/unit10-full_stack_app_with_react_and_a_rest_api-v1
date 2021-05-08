@@ -11,6 +11,9 @@ export default class CreateCourse extends Component {
 	};
 
 	render(){
+		const { context } = this.props;
+		const authUser = context.authenticatedUser;
+
 		const {
 			title,
 			description,
@@ -20,55 +23,56 @@ export default class CreateCourse extends Component {
 		} = this.state;
 
 		return(
-			<div className="main--flex">
-				<div>
-				<Form 
-          cancel={this.cancel}
-          errors={errors}
-          submit={this.submit}
-          submitButtonText="Create Course"
-          elements={() => (
-            <React.Fragment>
-							<div>
-								<label>Course Title
-									<input 
-										id="title" 
-										name="title" 
-										type="text"
-										value={title} 
-										onChange={this.change} />
-								</label>
-								<p>By AUTHOR</p>
-								<label>Course Description
-									<textarea 
-										id="description" 
-										name="description" 
-										type="text"
-										value={description} 
-										onChange={this.change} />
-								</label>
-							</div>
-							<div>
-								<label>Estimated Time
-									<input 
-										id="estimatedTime" 
-										name="estimatedTime" 
-										type="text"
-										value={estimatedTime} 
-										onChange={this.change} />
-								</label>
-								<label>Materials Needed
-									<textarea 
-										id="materialsNeeded" 
-										name="materialsNeeded"
-										type="materialsNeeded"
-										value={materialsNeeded} 
-										onChange={this.change} />
-								</label>
-							</div>
-            </React.Fragment>
-          )} />
-				</div>
+			<div className="wrap">
+				<h2>Create Course</h2>
+					<Form 
+						cancel={this.cancel}
+						errors={errors}
+						submit={this.submit}
+						submitButtonText="Create Course"
+						elements={() => (
+							<React.Fragment>
+								<div className="main--flex">
+									<div>
+										<label>Course Title
+											<input 
+												id="title" 
+												name="title" 
+												type="text"
+												value={title} 
+												onChange={this.change} />
+										</label>
+										<p>By {authUser.firstName} {authUser.lastName}</p>
+										<label>Course Description
+											<textarea 
+												id="description" 
+												name="description" 
+												type="text"
+												value={description} 
+												onChange={this.change} />
+										</label>
+									</div>
+									<div>
+										<label>Estimated Time
+											<input 
+												id="estimatedTime" 
+												name="estimatedTime" 
+												type="text"
+												value={estimatedTime} 
+												onChange={this.change} />
+										</label>
+										<label>Materials Needed
+											<textarea 
+												id="materialsNeeded" 
+												name="materialsNeeded"
+												type="materialsNeeded"
+												value={materialsNeeded} 
+												onChange={this.change} />
+										</label>
+									</div>
+								</div>
+							</React.Fragment>
+						)} />
 			</div>
 		);
 	}

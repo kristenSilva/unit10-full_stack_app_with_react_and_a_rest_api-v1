@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { Consumer } from './Context';
 
 //...rest is a collection of any props that get passed to it
-export default ({ component: Component, ...rest }) => {
+const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
     <Consumer>
       { context => (
@@ -23,3 +23,4 @@ export default ({ component: Component, ...rest }) => {
     </Consumer>
   );
 };
+export default PrivateRoute;

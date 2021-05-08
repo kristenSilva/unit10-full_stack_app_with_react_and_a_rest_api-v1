@@ -10,7 +10,7 @@ body {
 }
 h2 {
     font-size: 1.5rem;
-    font-weight: 900;
+    font-weight: 700;
     margin-bottom: 1rem;
 }
 p {
@@ -26,7 +26,7 @@ a {
 .wrap {
     max-width: 1250px;
     margin: 0 auto;
-    padding: 1rem;
+    padding: 0 1rem;
 }
 header {
     background: #57496e;
@@ -38,7 +38,6 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
 }
 .header--logo a {
     font-size: 1.25rem;

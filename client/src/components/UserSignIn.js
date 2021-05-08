@@ -77,7 +77,8 @@ export default class UserSignIn extends Component {
       } else {
         //redirects to page they were trying to access
         this.props.history.push(from);
-        console.log(`SUCCESS ${emailAddress} is now signed in: ${user}`);
+        console.log(`SUCCESS ${emailAddress} is now signed in:`);
+        console.log(user);
       }
     })
     .catch(err => {

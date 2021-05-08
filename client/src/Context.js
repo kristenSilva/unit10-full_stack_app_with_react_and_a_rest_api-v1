@@ -49,6 +49,7 @@ export class Provider extends Component {
   signOut = () => {
     this.setState({ authenticatedUser: null });
   }
+  
 }
 
 export const Consumer = Context.Consumer;

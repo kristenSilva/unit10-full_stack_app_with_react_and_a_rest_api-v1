@@ -7,6 +7,7 @@ export default class UpdateCourse extends Component {
 		description: '',
 		estimatedTime: '',
 		materialsNeeded: '',
+    userInfo: {},
 		errors: [],
 	};
 
@@ -21,10 +22,9 @@ export default class UpdateCourse extends Component {
         title: course.title, 
         description: course.description, 
         estimatedTime: course.estimatedTime, 
-        materialsNeeded: course.materialsNeeded
+        materialsNeeded: course.materialsNeeded,
+        userInfo: course.User
       });
-      console.log(`course user id: ${course.userId}`);
-      console.log(`authorized user id: ${authUser.id}`);
       if(course.userId !== authUser.id){
         //going to need to include a redirect page here
         this.props.history.push('/');
@@ -39,6 +39,7 @@ export default class UpdateCourse extends Component {
       description,
       estimatedTime,
       materialsNeeded,
+      userInfo,
       errors
     } = this.state;
 
@@ -61,7 +62,7 @@ export default class UpdateCourse extends Component {
                     value={title} 
                     onChange={this.change} />
                 </label>
-                <p>By AUTHOR</p>
+                <p>By {userInfo.firstName} {userInfo.lastName}</p>
                 <label>Course Description
                   <textarea 
                     id="description" 
@@ -135,6 +136,7 @@ export default class UpdateCourse extends Component {
         this.setState({ errors });
       } else {
         console.log(`course updated: ${title}`);
+        this.props.history.push(`/courses/${match.params.id}`);
       }
     })
     .catch(err => {

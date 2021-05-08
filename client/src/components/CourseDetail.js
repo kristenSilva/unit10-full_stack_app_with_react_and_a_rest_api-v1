@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 
 export default class CourseDetail extends Component {
 	state = {
@@ -9,7 +10,7 @@ export default class CourseDetail extends Component {
 
 	componentDidMount(){
 		const { context } = this.props;
-		//i figured out how to do this bc i inspected the components in chromedev tools
+
 		const { match } = this.props;
 		
 		context.data.getCourse(match.params.id)
@@ -19,7 +20,10 @@ export default class CourseDetail extends Component {
 				userInfo: course.User
 			});
 		})
-		.catch(err => console.log(`error fetching individual route: ${err}`));
+		.catch(err => {
+			this.props.history.push('/notfound');
+			console.log(`error fetching individual route: ${err}`);
+		});
 	}
 
 	render(){
@@ -28,7 +32,6 @@ export default class CourseDetail extends Component {
     const authUser = context.authenticatedUser;
 		return(
 			<React.Fragment>
-				<main>
 					<div className="actions--bar">
 						<div className="wrap">
 							{
@@ -53,18 +56,17 @@ export default class CourseDetail extends Component {
 									<h3 className="course--detail--title">Course</h3>
 									<h4 className="course--name">{course.title}</h4>
 									<p>By {userInfo.firstName} {userInfo.lastName}</p>
-									<p>{course.description}</p>
+									<ReactMarkdown children={course.description} />
 								</div>
 								<div>
 									<h3 className="course--detail--title">Estimated Time</h3>
 									<p>{course.estimatedTime}</p>
 									<h3 className="course--detail--title">Materials Needed</h3>
-									<ul className="course--detail--list">{course.materialsNeeded}</ul>
+									<ReactMarkdown className="course--detail--list" children={course.materialsNeeded} />
 								</div>
 							</div>
 						</form>
 					</div>
-				</main>
 			</React.Fragment>
 		);
 	}

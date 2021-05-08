@@ -26,11 +26,13 @@ export default class UpdateCourse extends Component {
         userInfo: course.User
       });
       if(course.userId !== authUser.id){
-        //going to need to include a redirect page here
-        this.props.history.push('/');
+        this.props.history.push('/forbidden');
       }
     })
-    .catch(err => console.log(`error fetching route: ${err}`));
+		.catch(err => {
+			this.props.history.push('/notfound');
+			console.log(`error fetching individual route: ${err}`);
+		});
   }
 
   render() {
@@ -44,8 +46,8 @@ export default class UpdateCourse extends Component {
     } = this.state;
 
     return(
-      <div className="main--flex">
-        <div>
+      <div className="wrap">
+        <h2>Update Course</h2>
         <Form 
           cancel={this.cancel}
           errors={errors}
@@ -53,47 +55,48 @@ export default class UpdateCourse extends Component {
           submitButtonText="Update Course"
           elements={() => (
             <React.Fragment>
-              <div>
-                <label>Course Title
-                  <input 
-                    id="title" 
-                    name="title" 
-                    type="text"
-                    value={title} 
-                    onChange={this.change} />
-                </label>
-                <p>By {userInfo.firstName} {userInfo.lastName}</p>
-                <label>Course Description
-                  <textarea 
-                    id="description" 
-                    name="description" 
-                    type="text"
-                    value={description} 
-                    onChange={this.change} />
-                </label>
-              </div>
-              <div>
-                <label>Estimated Time
-                  <input 
-                    id="estimatedTime" 
-                    name="estimatedTime" 
-                    type="text"
-                    value={estimatedTime || ''} 
-                    onChange={this.change} />
-                </label>
-                <label>Materials Needed
-                  <textarea 
-                    id="materialsNeeded" 
-                    name="materialsNeeded"
-                    type="materialsNeeded"
-                    value={materialsNeeded || ''} 
-                    onChange={this.change} />
-                </label>
+              <div className="main--flex">
+                <div>
+                  <label>Course Title
+                    <input 
+                      id="title" 
+                      name="title" 
+                      type="text"
+                      value={title} 
+                      onChange={this.change} />
+                  </label>
+                  <p>By {userInfo.firstName} {userInfo.lastName}</p>
+                  <label>Course Description
+                    <textarea 
+                      id="description" 
+                      name="description" 
+                      type="text"
+                      value={description} 
+                      onChange={this.change} />
+                  </label>
+                </div>
+                <div>
+                  <label>Estimated Time
+                    <input 
+                      id="estimatedTime" 
+                      name="estimatedTime" 
+                      type="text"
+                      value={estimatedTime || ''} 
+                      onChange={this.change} />
+                  </label>
+                  <label>Materials Needed
+                    <textarea 
+                      id="materialsNeeded" 
+                      name="materialsNeeded"
+                      type="materialsNeeded"
+                      value={materialsNeeded || ''} 
+                      onChange={this.change} />
+                  </label>
+                </div>
               </div>
             </React.Fragment>
           )} />
         </div>
-      </div>
     );
   }
   change = (event) => {

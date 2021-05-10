@@ -2,7 +2,8 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  Switch
+  Switch, 
+  Redirect
 } from 'react-router-dom';
 
 import withContext from './Context';
@@ -40,9 +41,10 @@ const App = () => (
         <Route path="/signup" component={UserSignUpWithContext} />
         <Route path="/signin" component={UserSignInWithContext} />
         <Route path="/signout" component={UserSignOutWithContext} />
+        <Route path="/notfound" component={NotFound} />
         <Route path="/forbidden" component={Forbidden} />
         <Route path="/error" component={UnhandledError} />
-        <Route component={NotFound}/>
+        <Route> <Redirect to="/notfound"/> </Route>
       </Switch>
     </div>
   </Router>

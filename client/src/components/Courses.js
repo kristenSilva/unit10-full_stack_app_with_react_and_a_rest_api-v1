@@ -14,7 +14,10 @@ export default class Courses extends Component {
 		.then((courses) => {
 			this.setState({ courses });
 		})
-		.catch(err => console.log(err));
+		.catch(err => {
+			this.props.history.push('/error');
+			console.log(err);
+		});
 	}
 
 	render() {

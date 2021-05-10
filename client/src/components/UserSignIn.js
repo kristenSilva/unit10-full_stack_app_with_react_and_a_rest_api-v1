@@ -80,6 +80,7 @@ export default class UserSignIn extends Component {
         this.props.history.push(from);
         //just checking if person got logged in
         console.log(`SUCCESS ${emailAddress} is now signed in:`);
+        console.log(user);
       }
     })
     .catch(err => {

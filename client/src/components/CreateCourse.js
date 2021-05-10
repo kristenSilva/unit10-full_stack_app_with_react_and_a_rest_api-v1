@@ -127,10 +127,6 @@ export default class CreateCourse extends Component {
   }
 
   cancel = () => {
-		// const { context } = this.props;
-		// const authUser = context.authenticatedUser;
-		// console.log('this is user according to createCourse:');
-		// console.log(authUser);
     this.props.history.push('/');
   }
 }

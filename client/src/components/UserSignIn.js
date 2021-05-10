@@ -64,6 +64,7 @@ export default class UserSignIn extends Component {
 
   submit = () => {
     const { context } = this.props;
+    //stores path user was on before arriving to sign in OR defaults to home route
     const { from } = this.props.location.state || { from: { pathname: '/' }};
     const { emailAddress, password } = this.state;
 
@@ -79,7 +80,6 @@ export default class UserSignIn extends Component {
         this.props.history.push(from);
         //just checking if person got logged in
         console.log(`SUCCESS ${emailAddress} is now signed in:`);
-        console.log(user);
       }
     })
     .catch(err => {

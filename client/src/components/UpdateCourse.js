@@ -16,6 +16,7 @@ export default class UpdateCourse extends Component {
     const { match } = this.props;
     const authUser = context.authenticatedUser;
 
+    //store existing course information
     context.data.getCourse(match.params.id)
     .then((course) => {
       this.setState({
@@ -25,6 +26,7 @@ export default class UpdateCourse extends Component {
         materialsNeeded: course.materialsNeeded,
         userInfo: course.User
       });
+      //check if owner of course matches signed in user
       if(course.userId !== authUser.id){
         this.props.history.push('/forbidden');
       }

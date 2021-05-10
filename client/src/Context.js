@@ -37,6 +37,7 @@ export class Provider extends Component {
   
   signIn = async (emailAddress, password) => {
     const user = await this.data.getUser(emailAddress, password);
+    //need to store password in order to access in other components - this is done instead of working with hashed variable
     user.password =  password;
     if(user !== null){
       this.setState(() => {
@@ -44,8 +45,7 @@ export class Provider extends Component {
           authenticatedUser: user
         };
       });
-      //persist credentials after authentication
-      //authenticatedUser is name of Cookie
+      //persist credentials after authentication-authenticatedUser is name of Cookie
       Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
     }
     return user;

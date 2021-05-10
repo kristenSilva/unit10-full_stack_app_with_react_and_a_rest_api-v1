@@ -1,6 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
+/**
+ * Header holds the 'welcome' message, sign in, sign out, and sign up links.
+ * Header updates according to whether there is a user signed in (conditional -ternary- operator used)
+ */
 export default class Header extends React.PureComponent{
 	render() {
     const { context } = this.props;

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './styles/reset.css';
 import './styles/global.css';
 
 import { Provider } from './Context';
@@ -7,6 +8,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
+  //Provider tags around App component to access Context
   <Provider>
     <App />
   </Provider>,

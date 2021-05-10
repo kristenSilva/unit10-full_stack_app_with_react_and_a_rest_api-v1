@@ -10,9 +10,9 @@ export default class CourseDetail extends Component {
 
 	componentDidMount(){
 		const { context } = this.props;
-
 		const { match } = this.props;
 		
+		//display course that was clicked via match object
 		context.data.getCourse(match.params.id)
 		.then((course) => {
 			this.setState({ 

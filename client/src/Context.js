@@ -37,8 +37,8 @@ export class Provider extends Component {
   
   signIn = async (emailAddress, password) => {
     const user = await this.data.getUser(emailAddress, password);
+
     //need to store password in order to access in other components - this is done instead of working with hashed variable
-    
     if(user !== null ){
       this.setState(() => {
         user.password = password;
